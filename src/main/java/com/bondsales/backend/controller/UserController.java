@@ -25,10 +25,10 @@ public class UserController {
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String delete(Long id) {
         int result = userservice.delete(id);
-        if (result >= 1) {
-            return "删除成功";
-        } else {
+        if (result < 1) {
             return "删除失败";
+        } else {
+            return "删除成功";
         }
     }
 
@@ -43,8 +43,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    public boolean insert(User user)
-    {
+    public boolean insert(User user) {
         return userservice.insertUser(user);
     }
 
