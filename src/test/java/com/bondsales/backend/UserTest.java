@@ -23,7 +23,6 @@ public class UserTest {
         user1.setUsername("dianaHuaXin");
         user1.setPassword("dfafdss");
         System.out.println(userController.insert(user1));
-//        System.out.println(new Gson().toJson(user1));
 
     }
 
