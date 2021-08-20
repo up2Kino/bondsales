@@ -39,12 +39,8 @@ public class SalesController {
         }
     }
 
-//    @RequestMapping(value = "/insertUser", method = RequestMethod.POST)
-//    public boolean insert(Sales sale) {
-//        return salesService.insertSales(sale);
-//    }
 
-    @RequestMapping(value = "/insertUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/insertSales", method = RequestMethod.POST)
     @ResponseBody
     public boolean insert(SalesInfo salesInfo) {
         Sales sale = new Sales();

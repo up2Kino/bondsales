@@ -21,7 +21,8 @@ public class UserTest {
         user1.setLogname("mulla196");
         user1.setUsername("mulla196");
         user1.setPassword("XUSHAN");
-        System.out.println(new Gson().toJson(user1));
+//        System.out.println(new Gson().toJson(user1));
+        userController.insert(user1);
 
     }
 
