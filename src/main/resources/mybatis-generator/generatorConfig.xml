@@ -8,8 +8,8 @@
     <!--执行generator插件生成文件的命令： call mvn mybatis-generator:generate -e -->
     <!-- 引入配置文件 -->
     <properties resource="application.properties"/>
-    <!--    classPathEntry:数据库的JDBC驱动,换成你自己的驱动位置 可选 -->
-    <!--    <classPathEntry location="D:generator_mybatismysql-connector-java-5.1.24-bin.jar" /> -->
+<!--    classPathEntry:数据库的JDBC驱动,换成你自己的驱动位置 可选 -->
+<!--    <classPathEntry location="D:generator_mybatismysql-connector-java-5.1.24-bin.jar" /> -->
 
     <!-- 一个数据库一个context -->
     <!--defaultModelType="flat" 大数据字段，不分表 -->
@@ -42,12 +42,13 @@
                         connectionURL="${spring.datasource.url}"
                         userId="${spring.datasource.username}"
                         password="${spring.datasource.password}">
-            <property name="nullCatalogMeansCurrent" value="true"/>
+        <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
+
         <!-- 类型转换 -->
         <javaTypeResolver>
             <!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->
-            <property name="forceBigDecimals" value="false"/>
+            <property name="forceBigDecimals" value="true"/>
         </javaTypeResolver>
 
         <!-- 生成实体类地址 -->
@@ -64,20 +65,25 @@
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
         <!-- table可以有多个,每个数据库中的表都可以写一个table，tableName表示要匹配的数据库表,也可以在tableName属性中通过使用%通配符来匹配所有数据库表,只有匹配的表才会自动生成文件 -->
-        <table tableName="user"
+        <table tableName="USER" domainObjectName="User"
                enableCountByExample="true"
                enableUpdateByExample="true"
                enableDeleteByExample="true"
                enableSelectByExample="true"
-               selectByExampleQueryId="true">
-            <!--            <property name="useActualColumnNames" value="false" />-->
-            <!--            &lt;!&ndash; 数据库表主键 &ndash;&gt;-->
-            <!--            <generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
-            <!--        </table>-->
-            <!--        <table tableName="book" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">-->
-            <!--            <property name="useActualColumnNames" value="false" />-->
-            <!--            &lt;!&ndash; 数据库表主键 &ndash;&gt;-->
-            <!--            <generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
-        </table>
+               selectByExampleQueryId="true"></table>
+
+        <table tableName="BOND" domainObjectName="Bond"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true"></table>
+
+        <table tableName="SALES" domainObjectName="Sales"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true"></table>
     </context>
 </generatorConfiguration>

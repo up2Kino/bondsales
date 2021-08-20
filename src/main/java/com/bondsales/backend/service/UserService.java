@@ -1,44 +1,61 @@
 package com.bondsales.backend.service;
 
-import com.bondsales.backend.dao.entity.Result;
 import com.bondsales.backend.dao.entity.User;
 import com.bondsales.backend.dao.mapper.UserMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.types.RedisClientInfo;
-import org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration;
+import com.google.gson.Gson;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+@Service
 public class UserService {
-    @Autowired
+    @Resource
     private UserMapper userMapper;
 
-    @Autowired
-    private RedisConnection redisConnections;
 
 
+//    public Result login(User user) {
+//        Result result = new Result();
+//        result.setSuccess(false);
+//        result.setDetail(null);
+//        try {
+//            Long userId = userMapper.login(user);
+//            if(userId == null) {
+//                result.setMsg("Username or password wrong");
+//            } else {
+//                result.setMsg("Login seccessfully!");
+//                result.setSuccess(true);
+//                user.setUserid(Math.toIntExact(userId));
+//                result.setDetail(user);
+//            }
+//        } catch (Exception e) {
+//            result.setMsg(e.getMessage());
+//            e.printStackTrace();
+//        }
+//        return result;
+//    }
 
-    public Result login(User user) {
-        Result result = new Result();
-        result.setSuccess(false);
-        result.setDetail(null);
+    public boolean insertUser(User user) {
         try {
-            Long userId = userMapper.login(user);
-            if(userId == null) {
-                result.setMsg("Username or password wrong");
-            } else {
-                result.setMsg("Login seccessfully!");
-                result.setSuccess(true);
-                user.setUserid(Math.toIntExact(userId));
-                result.setDetail(user);
-            }
-        } catch (Exception e) {
-            result.setMsg(e.getMessage());
-            e.printStackTrace();
+            userMapper.insert(user);
+            return true;
+        } catch (Exception e){
+            return false;
         }
-        return result;
+    }
+
+    public String ListUser(){
+//        return  userMapper.selectAll();
+        Gson gson = new Gson();
+        return gson.toJson(userMapper.selectAll());
+    }
+
+    public int Update(User user){
+        return userMapper.updateByPrimaryKey(user);
+    }
+
+    public int delete(Long id){
+        return userMapper.deleteByPrimaryKey(id);
     }
 }
+
