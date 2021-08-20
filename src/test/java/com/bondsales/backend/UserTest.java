@@ -16,12 +16,11 @@ public class UserTest {
     @Test
     public void testInsert(){
         User user1=new User();
-        user1.setUserid(5L);
-        user1.setUsername("nicolewang");
-        user1.setName("王佳怡");
-        user1.setPassword("abcdcdajlrf");
+//        user1.setUserid();
+        user1.setLogname("mulla196");
+        user1.setUsername("mulla196");
+        user1.setPassword("XUSHAN");
         System.out.println(userController.insert(user1));
-
     }
 
 }

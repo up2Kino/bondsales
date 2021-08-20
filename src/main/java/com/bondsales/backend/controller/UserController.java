@@ -43,7 +43,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    public User insert(User user)
+    public boolean insert(User user)
     {
         return userservice.insertUser(user);
     }
