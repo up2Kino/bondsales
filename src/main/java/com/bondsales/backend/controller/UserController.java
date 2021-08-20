@@ -21,7 +21,7 @@ public class UserController {
         return userservice.ListUser();
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    @RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
     public String delete(Long id) {
         int result = userservice.delete(id);
         if (result < 1) {
@@ -31,7 +31,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
     public String update(User user) {
         int result = userservice.Update(user);
         if (result >= 1) {
@@ -41,7 +41,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    @RequestMapping(value = "/insertUser", method = RequestMethod.POST)
     public boolean insert(User user) {
         return userservice.insertUser(user);
     }
