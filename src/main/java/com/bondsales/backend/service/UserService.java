@@ -25,7 +25,7 @@ public class UserService {
         return userMapper.updateByPrimaryKey(user);
     }
 
-    public int delete(int id){
+    public int delete(Long id){
         return userMapper.deleteByPrimaryKey(id);
     }
 }

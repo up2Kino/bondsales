@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public String delete(int id) {
+    public String delete(Long id) {
         int result = userservice.delete(id);
         if (result >= 1) {
             return "删除成功";
