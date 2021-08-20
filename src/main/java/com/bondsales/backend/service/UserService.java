@@ -2,10 +2,12 @@ package com.bondsales.backend.service;
 
 import com.bondsales.backend.dao.entity.User;
 import com.bondsales.backend.dao.mapper.UserMapper;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,8 +24,10 @@ public class UserService {
         }
     }
 
-    public List<User> ListUser(){
-        return  userMapper.selectAll();
+    public String ListUser(){
+//        return  userMapper.selectAll();
+        Gson gson = new Gson();
+        return gson.toJson(userMapper.selectAll());
     }
 
     public int Update(User user){

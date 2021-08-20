@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 
 @RestController
 public class UserController {
@@ -18,7 +17,7 @@ public class UserController {
 
     @RequestMapping("/ListUser")
     @ResponseBody
-    public List<User> ListUser(){
+    public String ListUser(){
         return userservice.ListUser();
     }
 
@@ -46,5 +45,6 @@ public class UserController {
     public boolean insert(User user) {
         return userservice.insertUser(user);
     }
+
 
 }
