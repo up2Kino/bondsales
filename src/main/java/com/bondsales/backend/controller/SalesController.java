@@ -15,7 +15,7 @@ public class SalesController {
 
     @RequestMapping("/ListAllSale")
     @ResponseBody
-    public String ListSale(){
+    public String listSale(){
         return salesService.listAllSale();
     }
 
@@ -37,6 +37,12 @@ public class SalesController {
     @ResponseBody
     public List<Sales> lookUp(@RequestBody SalesInfo salesInfo) {
         return salesService.lookUp(salesInfo);
+    }
+
+    @RequestMapping("/LatestRecords")
+    @ResponseBody
+    public String latestRecords(){
+        return salesService.latestRecords();
     }
 
 
