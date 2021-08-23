@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
-import static org.springframework.data.repository.init.ResourceReader.Type.JSON;
+import javax.servlet.http.HttpServletResponse;
 
 
 @RestController
+@RequestMapping("/json")
 public class UserController {
 
     @Autowired
@@ -59,9 +59,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String login(HttpServletRequest request, @RequestBody UserInfo userInfo){
+    public String login(HttpServletRequest request, HttpServletResponse response, @RequestBody UserInfo userInfo){
         if(userInfo.getLogname()==null||userInfo.getPassword()==null){
-            return "redirect:/login";
+            return new Gson().toJson( "Fail");
         }
         redisTemplate.opsForValue().set(request.getSession().getId(), new Gson().toJson(userInfo));
 
@@ -69,10 +69,10 @@ public class UserController {
         boolean verify = userservice.login(userInfo.getLogname(), userInfo.getPassword());
 
         if(!verify) {
-            return "redirect:/login";
+            return new Gson().toJson("Fail");
         }
         request.getSession().setAttribute(ConstantUtils.SESSION_KEY, userInfo);//username & password 都一致，设定session
-        return "login";
+        return new Gson().toJson(userInfo.getLogname());
 
     }
 
