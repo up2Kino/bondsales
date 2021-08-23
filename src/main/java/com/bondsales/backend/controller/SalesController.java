@@ -15,7 +15,7 @@ public class SalesController {
 
     @RequestMapping("/ListAllSale")
     @ResponseBody
-    public String ListSale(){
+    public String listSale(){
         return salesService.listAllSale();
     }
 

@@ -9,7 +9,7 @@ public class SalesInfo {
     private Long sellid;
 
     private Long userid;
-    
+
     private Long bondid;
 
     private Long price;
@@ -19,4 +19,7 @@ public class SalesInfo {
     private Date startDate;
 
     private Date endDate;
+
+    private String username;
+    private String bondname;
 }
