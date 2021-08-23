@@ -19,7 +19,7 @@ public class UserTest {
     public void testInsert(){
         User user1=new User();
         user1.setUserid(null);
-        user1.setLogname("diana96");
+//        user1.setLogname("diana96");
         user1.setUsername("dianaHuaXin");
         user1.setPassword("dfafdss");
         System.out.println(userController.insert(user1));

@@ -1,39 +1,19 @@
 package com.bondsales.backend.service;
 
+import com.bondsales.backend.common.UserInfo;
 import com.bondsales.backend.dao.entity.User;
 import com.bondsales.backend.dao.mapper.UserMapper;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
     @Resource
     private UserMapper userMapper;
-
-
-
-//    public Result login(User user) {
-//        Result result = new Result();
-//        result.setSuccess(false);
-//        result.setDetail(null);
-//        try {
-//            Long userId = userMapper.login(user);
-//            if(userId == null) {
-//                result.setMsg("Username or password wrong");
-//            } else {
-//                result.setMsg("Login seccessfully!");
-//                result.setSuccess(true);
-//                user.setUserid(Math.toIntExact(userId));
-//                result.setDetail(user);
-//            }
-//        } catch (Exception e) {
-//            result.setMsg(e.getMessage());
-//            e.printStackTrace();
-//        }
-//        return result;
-//    }
 
     public boolean insertUser(User user) {
         try {
@@ -54,8 +34,20 @@ public class UserService {
         return userMapper.updateByPrimaryKey(user);
     }
 
-    public int delete(Long id){
-        return userMapper.deleteByPrimaryKey(id);
+//    public int delete(Long id){
+//        return userMapper.deleteByPrimaryKey(id);
+//    }
+
+    public boolean login(String username, String password) {
+
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUsername(username);
+        userInfo.setPassword(password);
+        User result = userMapper.selectByUserName(userInfo);
+        if (result.getUsername().equals(username) && result.getPassword().equals(password)) {
+            return true;
+        }
+        return false;
     }
 }
 
