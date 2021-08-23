@@ -51,5 +51,5 @@ public interface SalesMapper {
 
     List<Sales> lookUp(@Param("SalesInfo") SalesInfo salesInfo);
 
-    List<Sales> latestRecords();
+    List<SalesInfo> latestRecords();
 }
