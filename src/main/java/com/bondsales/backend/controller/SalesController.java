@@ -41,24 +41,24 @@ public class SalesController {
 
 
 
-//    @RequestMapping(value = "/deleteSale", method = RequestMethod.GET)
-//    public String delete(Long id) {
-//        int result = salesService.delete(id);
-//        if (result < 1) {
-//            return "删除失败";
-//        } else {
-//            return "删除成功";
-//        }
-//    }
-//
-//    @RequestMapping(value = "/updateSale", method = RequestMethod.POST)
-//    public String update(Sales sale) {
-//        int result = salesService.Update(sale);
-//        if (result >= 1) {
-//            return "修改成功";
-//        } else {
-//            return "修改失败";
-//        }
-//    }
+    @RequestMapping(value = "/deleteSale", method = RequestMethod.GET)
+    public String delete(Long id) {
+        int result = salesService.delete(id);
+        if (result < 1) {
+            return "删除失败";
+        } else {
+            return "删除成功";
+        }
+    }
+
+    @RequestMapping(value = "/updateSale", method = RequestMethod.POST)
+    public String update(Sales sale) {
+        int result = salesService.Update(sale);
+        if (result >= 1) {
+            return "修改成功";
+        } else {
+            return "修改失败";
+        }
+    }
 
 }
