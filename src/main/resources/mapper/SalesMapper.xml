@@ -13,6 +13,31 @@
     <result column="date" jdbcType="TIMESTAMP" property="date" />
   </resultMap>
 
+  <resultMap id="SalesInfoMap" type="com.bondsales.backend.common.SalesInfo">
+    <id column="sellID" jdbcType="BIGINT" property="sellid" />
+    <result column="userID" jdbcType="BIGINT" property="userid" />
+    <result column="bondID" jdbcType="BIGINT" property="bondid" />
+    <result column="price" jdbcType="BIGINT" property="price" />
+    <result column="date" jdbcType="TIMESTAMP" property="date" />
+    <result column="startDate" jdbcType="TIMESTAMP" property="date" />
+    <result column="endDate" jdbcType="TIMESTAMP" property="date" />
+    <result column="bondName" jdbcType="VARCHAR" property="bondname" />
+    <result column="userName" jdbcType="VARCHAR" property="username" />
+
+<!--    <association property="User" javaType="com.bondsales.backend.dao.entity.User">-->
+<!--      <id column="userID" jdbcType="BIGINT" property="userid" />-->
+<!--      <result column="logName" jdbcType="VARCHAR" property="logname" />-->
+<!--      <result column="userName" jdbcType="VARCHAR" property="username" />-->
+<!--      <result column="password" jdbcType="VARCHAR" property="password" />-->
+<!--    </association>-->
+
+<!--    <association property="Bond" javaType="com.bondsales.backend.dao.entity.Bond">-->
+<!--      <id column="bondID" jdbcType="BIGINT" property="bondid" />-->
+<!--      <result column="bondName" jdbcType="VARCHAR" property="bondname" />-->
+<!--    </association>-->
+  </resultMap>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     <!--
       WARNING - @mbggenerated
@@ -61,16 +86,16 @@
     from SALES
   </select>
 
-  <select id="lookUp" parameterType="com.bondsales.backend.common.SalesInfo" resultMap="BaseResultMap">
-    select sellID, userID, bondID, price, `date`
-    from SALES
+  <select id="lookUp" parameterType="com.bondsales.backend.common.SalesInfo" resultMap="SalesInfoMap">
+    select sellID, s.userID, s.bondID, price, `date`, d.bondname, u.username
+    from SALES s left join BOND d on s.bondid = d.bondid left join USER u on s.userid = u.userid
     <where>
           date between #{SalesInfo.startDate,jdbcType=DATE} and #{SalesInfo.endDate,jdbcType=DATE}
     <if test="SalesInfo.bondid != null">
-      and bondid = #{SalesInfo.bondid,jdbcType=BIGINT}
+      and s.bondid = #{SalesInfo.bondid,jdbcType=BIGINT}
     </if>
     <if test="SalesInfo.userid != null">
-      and userid = #{SalesInfo.userid,jdbcType=BIGINT}
+      and s.userid = #{SalesInfo.userid,jdbcType=BIGINT}
     </if>
     </where>
   </select>
