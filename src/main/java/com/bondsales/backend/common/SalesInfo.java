@@ -9,12 +9,8 @@ public class SalesInfo {
     private Long sellid;
 
     private Long userid;
-
-    private String username;
-
+    
     private Long bondid;
-
-    private String bondname;
 
     private Long price;
 

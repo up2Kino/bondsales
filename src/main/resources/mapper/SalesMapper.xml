@@ -12,6 +12,7 @@
     <result column="price" jdbcType="BIGINT" property="price" />
     <result column="date" jdbcType="TIMESTAMP" property="date" />
   </resultMap>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     <!--
       WARNING - @mbggenerated
@@ -64,17 +65,15 @@
     select sellID, userID, bondID, price, `date`
     from SALES
     <where>
-          date between #{startDate,jdbcType=DATE} and #{endDate,jdbcType=Date} and
-    <if test="SalesInfo.bondname != null">
-      bondname = #{bondname,jdbcType=String}
+          date between #{SalesInfo.startDate,jdbcType=DATE} and #{SalesInfo.endDate,jdbcType=DATE}
+    <if test="SalesInfo.bondid != null">
+      and bondid = #{SalesInfo.bondid,jdbcType=BIGINT}
     </if>
-    and
-    <if test="SalesInfo.username != null">
-      username = #{username,jdbcType=String}
+    <if test="SalesInfo.userid != null">
+      and userid = #{SalesInfo.userid,jdbcType=BIGINT}
     </if>
-          date between #{startDate,jdbcType=DATE} and #{endDate,jdbcType=DATE}
     </where>
-
   </select>
 
 </mapper>
+

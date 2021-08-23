@@ -3,8 +3,8 @@ package com.bondsales.backend.dao.mapper;
 import com.bondsales.backend.common.SalesInfo;
 import com.bondsales.backend.dao.entity.Sales;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
-import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -49,5 +49,5 @@ public interface SalesMapper {
      */
     int updateByPrimaryKey(Sales record);
 
-    List<Sales> lookUp(SalesInfo salesInfo);
+    List<Sales> lookUp(@Param("SalesInfo") SalesInfo salesInfo);
 }
