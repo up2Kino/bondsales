@@ -15,4 +15,11 @@ public class SalesInfo {
     private Long price;
 
     private Date date;
+
+    private Date startDate;
+
+    private Date endDate;
+
+    private Long bondidUpper = Long.MAX_VALUE;
+    private Long useridUpper = Long.MAX_VALUE;
 }

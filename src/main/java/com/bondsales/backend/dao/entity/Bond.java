@@ -72,7 +72,11 @@ public class Bond implements Serializable {
      * @mbggenerated
      */
     public void setBondname(String bondname) {
-        this.bondname = bondname == null ? null : bondname.trim();
+        if(bondname == null){
+            this.bondname = null;
+        } else{
+            this.bondname = bondname.trim();
+        }
     }
 
     /**

@@ -59,4 +59,14 @@
     select sellID, userID, bondID, price, `date`
     from SALES
   </select>
+
+  <select id="lookUp" parameterType="com.bondsales.backend.common.SalesInfo" resultMap="BaseResultMap">
+    select sellID, userID, bondID, price, `date`
+    from SALES
+    where bondid between #{bondid,jdbcType=BIGINT} and #{bondidUpper,jdbcType=BIGINT} and
+          userid between #{userid,jdbcType=BIGINT} and #{useridUpper,jdbcType=BIGINT} and
+          date between #{startDate,jdbcType=DATE} and #{endDate,jdbcType=DATE}
+
+  </select>
+
 </mapper>

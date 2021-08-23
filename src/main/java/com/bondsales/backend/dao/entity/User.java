@@ -88,7 +88,11 @@ public class User implements Serializable {
      * @mbggenerated
      */
     public void setLogname(String logname) {
-        this.logname = logname == null ? null : logname.trim();
+        if(logname == null){
+            this.logname = null;
+        } else{
+            this.logname = logname.trim();
+        }
     }
 
     /**

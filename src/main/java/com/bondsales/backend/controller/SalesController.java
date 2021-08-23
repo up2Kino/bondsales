@@ -2,75 +2,85 @@ package com.bondsales.backend.controller;
 
 import com.bondsales.backend.common.SalesInfo;
 import com.bondsales.backend.dao.entity.Sales;
-import com.bondsales.backend.dao.entity.User;
 import com.bondsales.backend.service.SalesService;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 
 @RestController
+@ResponseBody
 public class SalesController {
     @Autowired
     private SalesService salesService;
 
-    @RequestMapping("/ListSale")
+    @RequestMapping("/ListAllSale")
     @ResponseBody
     public String ListSale(){
-        return salesService.ListSale();
+        return salesService.listAllSale();
     }
-
-    @RequestMapping(value = "/deleteSale", method = RequestMethod.GET)
-    public String delete(Long id) {
-        int result = salesService.delete(id);
-        if (result < 1) {
-            return "删除失败";
-        } else {
-            return "删除成功";
-        }
-    }
-
-    @RequestMapping(value = "/updateSale", method = RequestMethod.POST)
-    public String update(Sales sale) {
-        int result = salesService.Update(sale);
-        if (result >= 1) {
-            return "修改成功";
-        } else {
-            return "修改失败";
-        }
-    }
-
 
     @RequestMapping(value = "/insertSales", method = RequestMethod.POST)
     @ResponseBody
-    public boolean insert(SalesInfo salesInfo) {
+    public boolean insert(@RequestBody SalesInfo salesInfo) {
         Sales sale = new Sales();
+
         sale.setSellid(null);
         sale.setBondid(salesInfo.getBondid());
-        sale.setDate(salesInfo.getDate());
         sale.setPrice(salesInfo.getPrice());
         sale.setUserid(salesInfo.getUserid());
+        sale.setDate(salesInfo.getDate());
+
         return salesService.insertSales(sale);
     }
 
+    @RequestMapping(value = "/lookUp", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Sales> lookUp(@RequestBody SalesInfo salesInfo) throws ParseException {
+        // when user doesn't choose the range of date
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        if(salesInfo.getEndDate() == null) salesInfo.setEndDate(simpleDateFormat.parse("2025-01-02"));
+        if(salesInfo.getStartDate() == null) salesInfo.setStartDate(simpleDateFormat.parse("1992-01-02"));
 
-//    public void temp(){
-//        DateFormat df=new SimpleDateFormat("MM/dd/yyyy");
-//        Date d1 = new Date();
-//        //DateFormat是抽象类 ，抽象类不可以直接创建对象，所以我们创建子类的对象
-//        try {
-//            d1 = df.parse("08/20/2021");//这个格式必须按照上面给出的格式进行转化否则出错
-//        } catch (ParseException e) {
-//            e.printStackTrace();
+        // when user doesn't choose the type of bond
+        if(salesInfo.getBondid() == null){
+            salesInfo.setBondid(0L);
+        } else{
+            salesInfo.setBondidUpper(salesInfo.getBondid());
+        }
+
+        // when user doesn't choose the type of broker
+        if(salesInfo.getUserid() == null){
+            salesInfo.setUserid(0L);
+        } else{
+            salesInfo.setUseridUpper(salesInfo.getUserid());
+        }
+
+        return salesService.lookUp(salesInfo);
+    }
+
+
+
+//    @RequestMapping(value = "/deleteSale", method = RequestMethod.GET)
+//    public String delete(Long id) {
+//        int result = salesService.delete(id);
+//        if (result < 1) {
+//            return "删除失败";
+//        } else {
+//            return "删除成功";
 //        }
-//        DateFormat dfRight = new SimpleDateFormat("yyyy-MM-dd");
-//        String d2= dfRight.format(d1);
-//        System.out.println(d2);
 //    }
-
+//
+//    @RequestMapping(value = "/updateSale", method = RequestMethod.POST)
+//    public String update(Sales sale) {
+//        int result = salesService.Update(sale);
+//        if (result >= 1) {
+//            return "修改成功";
+//        } else {
+//            return "修改失败";
+//        }
+//    }
 
 }
