@@ -6,15 +6,17 @@ import com.bondsales.backend.common.UserInfo;
 import com.bondsales.backend.dao.entity.User;
 import com.bondsales.backend.dao.mapper.UserMapper;
 import com.bondsales.backend.service.UserService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
+import javax.servlet.http.HttpServletResponse;
 
 
 @RestController
+@RequestMapping("/json")
 public class UserController {
 
     @Autowired
@@ -54,19 +56,19 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String login(HttpServletRequest request, @RequestBody UserInfo userInfo){
+    public String login(HttpServletRequest request, HttpServletResponse response, @RequestBody UserInfo userInfo){
         if(userInfo.getLogname()==null||userInfo.getPassword()==null){
-            return "redirect:/login";
+            return new Gson().toJson( "Fail");
         }
 
         //验证用户名和密码
         boolean verify = userservice.login(userInfo.getLogname(), userInfo.getPassword());
 
         if(!verify) {
-            return "redirect:/login";
+            return new Gson().toJson("Fail");
         }
         request.getSession().setAttribute(ConstantUtils.SESSION_KEY, userInfo);//username & password 都一致，设定session
-        return "login";
+        return new Gson().toJson(userInfo.getLogname());
 
     }
 
