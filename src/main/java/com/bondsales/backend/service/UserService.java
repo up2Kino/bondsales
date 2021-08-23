@@ -34,17 +34,17 @@ public class UserService {
         return userMapper.updateByPrimaryKey(user);
     }
 
-//    public int delete(Long id){
-//        return userMapper.deleteByPrimaryKey(id);
-//    }
+    public int delete(Long id){
+        return userMapper.deleteByPrimaryKey(id);
+    }
 
-    public boolean login(String username, String password) {
+    public boolean login(String logname, String password) {
 
         UserInfo userInfo = new UserInfo();
-        userInfo.setUsername(username);
+        userInfo.setLogname(logname);
         userInfo.setPassword(password);
         User result = userMapper.selectByUserName(userInfo);
-        if (result.getUsername().equals(username) && result.getPassword().equals(password)) {
+        if (result.getLogname().equals(logname) && result.getPassword().equals(password)) {
             return true;
         }
         return false;
