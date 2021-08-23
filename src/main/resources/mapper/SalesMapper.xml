@@ -63,9 +63,17 @@
   <select id="lookUp" parameterType="com.bondsales.backend.common.SalesInfo" resultMap="BaseResultMap">
     select sellID, userID, bondID, price, `date`
     from SALES
-    where bondid between #{bondid,jdbcType=BIGINT} and #{bondidUpper,jdbcType=BIGINT} and
-          userid between #{userid,jdbcType=BIGINT} and #{useridUpper,jdbcType=BIGINT} and
+    <where>
+          date between #{startDate,jdbcType=DATE} and #{endDate,jdbcType=Date} and
+    <if test="SalesInfo.bondname != null">
+      bondname = #{bondname,jdbcType=String}
+    </if>
+    and
+    <if test="SalesInfo.username != null">
+      username = #{username,jdbcType=String}
+    </if>
           date between #{startDate,jdbcType=DATE} and #{endDate,jdbcType=DATE}
+    </where>
 
   </select>
 

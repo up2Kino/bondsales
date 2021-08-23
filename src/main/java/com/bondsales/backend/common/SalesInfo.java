@@ -10,7 +10,11 @@ public class SalesInfo {
 
     private Long userid;
 
+    private String username;
+
     private Long bondid;
+
+    private String bondname;
 
     private Long price;
 
@@ -19,7 +23,4 @@ public class SalesInfo {
     private Date startDate;
 
     private Date endDate;
-
-    private Long bondidUpper = Long.MAX_VALUE;
-    private Long useridUpper = Long.MAX_VALUE;
 }
