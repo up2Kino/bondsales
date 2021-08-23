@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @RestController
-@RequestMapping("/json")
 public class UserController {
 
     @Autowired
