@@ -6,6 +6,7 @@ import org.mybatis.logging.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.lang.reflect.Method;
 
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
@@ -27,7 +29,9 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        HttpSession session = request.getSession(true);
+
+
+
         User user = (User) request.getSession().getAttribute(ConstantUtils.SESSION_KEY);
         //如果session中没有user，表示没登陆
         if (user == null){

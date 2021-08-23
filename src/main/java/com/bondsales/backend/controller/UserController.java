@@ -6,12 +6,15 @@ import com.bondsales.backend.common.UserInfo;
 import com.bondsales.backend.dao.entity.User;
 import com.bondsales.backend.dao.mapper.UserMapper;
 import com.bondsales.backend.service.UserService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import static org.springframework.data.repository.init.ResourceReader.Type.JSON;
 
 
 @RestController
@@ -21,6 +24,8 @@ public class UserController {
     private UserService userservice;
     @Resource
     private UserMapper userMapper;
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     @RequestMapping("/ListUser")
     @ResponseBody
@@ -58,6 +63,7 @@ public class UserController {
         if(userInfo.getLogname()==null||userInfo.getPassword()==null){
             return "redirect:/login";
         }
+        redisTemplate.opsForValue().set(request.getSession().getId(), new Gson().toJson(userInfo));
 
         //验证用户名和密码
         boolean verify = userservice.login(userInfo.getLogname(), userInfo.getPassword());
@@ -74,6 +80,7 @@ public class UserController {
     public String logout(HttpServletRequest request, String username, String password){
         request.getSession().invalidate();//使Session变成无效，及用户退出
         request.getSession().removeAttribute(ConstantUtils.SESSION_KEY);
+        redisTemplate.delete(request.getSession().getId());
         return "logout";
     }
 
