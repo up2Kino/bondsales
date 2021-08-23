@@ -7,10 +7,7 @@ import com.bondsales.backend.dao.entity.User;
 import com.bondsales.backend.dao.mapper.UserMapper;
 import com.bondsales.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -56,21 +53,19 @@ public class UserController {
         return userservice.insertUser(user);
     }
 
-    @RequestMapping(value = "/login",method = RequestMethod.GET)
-    public String login(HttpServletRequest request, String logname, String password){
-        UserInfo userInfo = new UserInfo();
-        userInfo.setLogname(request.getParameter("logname"));
-        userInfo.setPassword(request.getParameter("password"));
-
-
-
-        boolean verify = userservice.login(userInfo.getLogname(), userInfo.getPassword());
-        System.out.println(verify);
-
-        if(!verify) {
-            request.getSession().setAttribute(ConstantUtils.SESSION_KEY, userInfo);//username & password 都一致，设定session
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    public String login(HttpServletRequest request, @RequestBody UserInfo userInfo){
+        if(userInfo.getLogname()==null||userInfo.getPassword()==null){
             return "redirect:/login";
         }
+
+        //验证用户名和密码
+        boolean verify = userservice.login(userInfo.getLogname(), userInfo.getPassword());
+
+        if(!verify) {
+            return "redirect:/login";
+        }
+        request.getSession().setAttribute(ConstantUtils.SESSION_KEY, userInfo);//username & password 都一致，设定session
         return "login";
 
     }
