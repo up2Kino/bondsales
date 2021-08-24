@@ -10,6 +10,8 @@ import java.io.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class FileService extends Thread{
@@ -52,25 +54,30 @@ public class FileService extends Thread{
         FileInputStream fstream = new FileInputStream(fileName);
         BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
         String strLine = "";
+        List<Sales> record = new ArrayList<>();
+
         while ((strLine = br.readLine()) != null) {
             String string = strLine;
             String[] parts = string.split(",");
 
             Sales sale = new Sales();
+            sale.setSellid(null);
             sale.setUserid(Long.parseLong(parts[0]));
-            sale.setBondid(Long.parseLong(parts[1]));
-            sale.setPrice(Long.parseLong(parts[2]));
+            sale.setBondid(Long.parseLong(parts[2]));
+            sale.setPrice(Long.parseLong(parts[4]));
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-            sale.setDate(df.parse(parts[3]));
-            try{
-                salesMapper.insert(sale);
-            } catch (Exception e){
-                e.printStackTrace();
-                System.out.println("wrong");
-            }
-
+            sale.setDate(df.parse(parts[5]));
+            record.add(sale);
         }
+
+        try{
+            salesMapper.insertBatch(record);
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("wrong");
+        }
+
         br.close();
     }
 

@@ -18,8 +18,7 @@ public class FileController {
     @RequestMapping(value = "/fileUpload")
     @ResponseBody
     public void fileUpload() throws IOException {
-//        int splitRow = 300000;
-        int splitRow = 50;
+        int splitRow = 300000;
         int end = getLineNum(fileName);
         int numOfFiles = splitField(end, splitRow);
 

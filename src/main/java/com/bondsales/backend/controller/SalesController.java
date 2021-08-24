@@ -38,6 +38,12 @@ public class SalesController {
         return salesService.lookUp(salesInfo);
     }
 
+    @RequestMapping("/LatestRecords")
+    @ResponseBody
+    public String latestRecords(){
+        return salesService.latestRecords();
+    }
+
 
 
     @RequestMapping(value = "/deleteSale", method = RequestMethod.GET)

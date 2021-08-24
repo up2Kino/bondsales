@@ -22,4 +22,7 @@ public class SalesInfo {
 
     private String username;
     private String bondname;
+
+    private Long pageNumber;
+    private Long numPerPage;
 }
