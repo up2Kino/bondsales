@@ -1,8 +1,10 @@
 package com.bondsales.backend.controller;
 
+import com.bondsales.backend.dao.entity.Sales;
 import com.bondsales.backend.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -17,7 +19,13 @@ public class FileController {
 
     @RequestMapping(value = "/fileUpload")
     @ResponseBody
-    public void fileUpload() throws IOException {
+    public void fileUpload(MultipartFile file) throws IOException {
+        File convFile = new File( fileName);
+        FileOutputStream fos = new FileOutputStream( convFile );
+        fos.write( file.getBytes() );
+        fos.close();
+
+        // run
         int splitRow = 300000;
         int end = getLineNum(fileName);
         int numOfFiles = splitField(end, splitRow);
@@ -27,20 +35,38 @@ public class FileController {
             fileService.run();
         }
         System.out.println("finish!");
-        return;
     }
 
     // get the number of lines
     public int getLineNum(String fileName) throws IOException {
-        FileInputStream fstream = new FileInputStream(fileName);
-        BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
-        String strLine = "";
-        int i = 0;
-        while((strLine = br.readLine() )!= null){
-            i++;
+        FileInputStream fstream = null;
+        BufferedReader br = null;
+        try{
+            fstream = new FileInputStream(fileName);
+            br = new BufferedReader(new InputStreamReader(fstream));
+            String strLine = "";
+            int i = 0;
+            while((strLine = br.readLine() )!= null){
+                i++;
+            }
+            return i;
+        } catch (Exception e){
+//            System.out.println("将大文件拆分成小文件异常，异常：" + e);
+        } finally {
+            try {
+                if(br != null)
+                    br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (fstream != null)
+                    fstream.close();
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
         }
-        br.close();
-        return i;
+        return -1;
     }
 
 

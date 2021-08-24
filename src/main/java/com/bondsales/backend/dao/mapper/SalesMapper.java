@@ -49,7 +49,9 @@ public interface SalesMapper {
      */
     int updateByPrimaryKey(Sales record);
 
-    List<Sales> lookUp(@Param("SalesInfo") SalesInfo salesInfo);
+    List<SalesInfo> lookUp(@Param("SalesInfo") SalesInfo salesInfo);
+
+    Long lookUpCount(@Param("SalesInfo") SalesInfo salesInfo);
 
     List<SalesInfo> latestRecords();
 
