@@ -1,5 +1,5 @@
 /**
- * 注入拦截器
+ * 请求拦截器注册类
  */
 package com.bondsales.backend.Interceptor;
 

@@ -1,5 +1,5 @@
 /**
- * 启动springboot
+ * springboot启动项目
  */
 package com.bondsales.backend;
 
