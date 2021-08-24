@@ -4,13 +4,14 @@ import com.bondsales.backend.common.SalesInfo;
 import com.bondsales.backend.dao.entity.Sales;
 import com.bondsales.backend.dao.mapper.SalesMapper;
 import com.google.gson.Gson;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service
 public class SalesService {
-    @Autowired
+    @Resource
     private SalesMapper salesMapper;
 
     public boolean insertSales(Sales sale) {
@@ -31,18 +32,11 @@ public class SalesService {
         return salesMapper.lookUp(salesInfo);
     }
 
-    public String latestRecords(){
-        Gson gson = new Gson();
-        return gson.toJson(salesMapper.latestRecords());
+    public int Update(Sales sale){
+        return salesMapper.updateByPrimaryKey(sale);
     }
 
-
-
-//    public int Update(Sales sale){
-//        return salesMapper.updateByPrimaryKey(sale);
-//    }
-//
-//    public int delete(Long id){
-//        return salesMapper.deleteByPrimaryKey(id);
-//    }
+    public int delete(Long id){
+        return salesMapper.deleteByPrimaryKey(id);
+    }
 }

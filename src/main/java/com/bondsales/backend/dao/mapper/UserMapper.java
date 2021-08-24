@@ -1,7 +1,9 @@
 package com.bondsales.backend.dao.mapper;
 
+import com.bondsales.backend.common.UserInfo;
 import com.bondsales.backend.dao.entity.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -46,4 +48,11 @@ public interface UserMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(User record);
+
+    /**
+     * 登录查询用户信息
+     * @param userInfo
+     * @return
+     */
+    User selectByUserName(@Param("UserInfo") UserInfo userInfo);
 }

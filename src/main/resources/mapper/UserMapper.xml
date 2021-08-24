@@ -57,4 +57,9 @@
     select userID, logName, userName, `password`
     from USER
   </select>
+  <select id="selectByUserName" parameterType="com.bondsales.backend.common.UserInfo" resultType="com.bondsales.backend.dao.entity.User">
+    select logName,password
+    from USER
+    where logName = #{UserInfo.logname}
+  </select>
 </mapper>
