@@ -50,14 +50,14 @@ public class UserController {
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public String login(HttpServletRequest request, @RequestBody UserInfo userInfo){
         if(userInfo.getLogname()==null||userInfo.getPassword()==null){
-            return new Gson().toJson( "Fail");
+            return new Gson().toJson(null);
         }
 
         //验证用户名和密码
         boolean verify = userservice.login(userInfo.getLogname(), userInfo.getPassword());
 
         if(!verify) {
-            return new Gson().toJson("Fail");
+            return new Gson().toJson(null);
         }
         request.getSession().setAttribute(ConstantUtils.SESSION_KEY, userInfo.getLogname());//username & password 都一致，设定session
         return new Gson().toJson(userInfo.getLogname());
