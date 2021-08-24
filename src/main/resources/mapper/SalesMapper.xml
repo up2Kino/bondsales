@@ -88,8 +88,8 @@
       and s.userid = #{SalesInfo.userid,jdbcType=BIGINT}
     </if>
     </where>
-    <if test="SalesInfo.pageNumber != -1">
-<!--      limit (#{SalesInfo.pageNumber,jdbcType=BIGINT} - 1) * #{SalesInfo.numPerPage,jdbcType=BIGINT} , #{SalesInfo.numPerPage,jdbcType=BIGINT}-->
+    <if test="SalesInfo.pageNumber != null">
+      limit #{SalesInfo.pageNumber,jdbcType=BIGINT} , #{SalesInfo.numPerPage,jdbcType=BIGINT}
     </if>
 
   </select>

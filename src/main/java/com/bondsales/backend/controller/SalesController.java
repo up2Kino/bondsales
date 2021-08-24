@@ -35,6 +35,10 @@ public class SalesController {
     @RequestMapping(value = "/lookUp", method = RequestMethod.POST)
     @ResponseBody
     public List<Sales> lookUp(@RequestBody SalesInfo salesInfo) {
+        if(salesInfo.getPageNumber() != null){
+            Long new_pageNumber = (salesInfo.getPageNumber()-1) * salesInfo.getNumPerPage();
+            salesInfo.setPageNumber(new_pageNumber);
+        }
         return salesService.lookUp(salesInfo);
     }
 
