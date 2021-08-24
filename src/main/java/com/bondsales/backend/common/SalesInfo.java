@@ -1,3 +1,6 @@
+/**
+ * 销售数据的录入
+ */
 package com.bondsales.backend.common;
 
 import lombok.Data;

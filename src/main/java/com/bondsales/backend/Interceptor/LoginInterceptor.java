@@ -1,3 +1,6 @@
+/**
+ * 拦截器拦截除了登入登出页面的其他页面，检验是否这个session里的用户登录过，没登录过返回登录页面进行登录，登录放行
+ */
 package com.bondsales.backend.Interceptor;
 
 import com.bondsales.backend.dao.entity.User;
@@ -33,6 +36,4 @@ public class LoginInterceptor implements HandlerInterceptor {
             return false;
         }
     }
-
-
 }
