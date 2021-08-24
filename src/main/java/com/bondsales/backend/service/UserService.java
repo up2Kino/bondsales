@@ -14,7 +14,6 @@ public class UserService {
     private UserMapper userMapper;
 
     public String ListUser(){
-//        return  userMapper.selectAll();
         Gson gson = new Gson();
         return gson.toJson(userMapper.selectAll());
     }
@@ -42,7 +41,9 @@ public class UserService {
         UserInfo userInfo = new UserInfo();
         userInfo.setLogname(logname);
         userInfo.setPassword(password);
+        //从数据库中取出logname和password存入result
         User result = userMapper.selectByUserName(userInfo);
+        //判断logname和password是否一致
         if (result.getLogname().equals(logname) && result.getPassword().equals(password)) {
             return true;
         }

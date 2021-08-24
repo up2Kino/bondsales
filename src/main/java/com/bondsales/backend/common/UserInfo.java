@@ -1,3 +1,6 @@
+/**
+ * 新建一个类存logname 和 password用于login放入session
+ */
 package com.bondsales.backend.common;
 
 import lombok.Data;

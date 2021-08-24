@@ -1,3 +1,6 @@
+/**
+ * 债券销售业务模块流程的控制，调用SalesService接口控制业务流程
+ */
 package com.bondsales.backend.controller;
 
 import com.bondsales.backend.common.SalesInfo;
@@ -8,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@ResponseBody
 public class SalesController {
     @Autowired
     private SalesService salesService;
@@ -37,6 +39,12 @@ public class SalesController {
     @ResponseBody
     public List<Sales> lookUp(@RequestBody SalesInfo salesInfo) {
         return salesService.lookUp(salesInfo);
+    }
+
+    @RequestMapping("/LatestRecords")
+    @ResponseBody
+    public String latestRecords(){
+        return salesService.latestRecords();
     }
 
 

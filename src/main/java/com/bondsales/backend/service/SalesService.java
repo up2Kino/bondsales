@@ -32,6 +32,11 @@ public class SalesService {
         return salesMapper.lookUp(salesInfo);
     }
 
+    public String latestRecords(){
+        Gson gson = new Gson();
+        return gson.toJson(salesMapper.latestRecords());
+    }
+
     public int Update(Sales sale){
         return salesMapper.updateByPrimaryKey(sale);
     }

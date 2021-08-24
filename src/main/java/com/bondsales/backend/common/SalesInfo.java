@@ -1,3 +1,6 @@
+/**
+ * 销售数据的录入
+ */
 package com.bondsales.backend.common;
 
 import lombok.Data;
@@ -22,4 +25,7 @@ public class SalesInfo {
 
     private String username;
     private String bondname;
+
+    private Long pageNumber;
+    private Long numPerPage;
 }

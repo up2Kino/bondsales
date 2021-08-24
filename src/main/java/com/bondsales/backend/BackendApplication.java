@@ -1,3 +1,6 @@
+/**
+ * springboot启动项目
+ */
 package com.bondsales.backend;
 
 import org.springframework.boot.SpringApplication;

@@ -1,3 +1,6 @@
+/**
+ * 进行登录登出，数据库增删改查业务的控制
+ */
 package com.bondsales.backend.controller;
 
 import com.bondsales.backend.Interceptor.ConstantUtils;
@@ -17,7 +20,7 @@ public class UserController {
     private UserService userservice;
 
     @RequestMapping("/ListUser")
-    @ResponseBody
+    @ResponseBody //将方法的返回值以特定的格式写入到response的body区域，进而将数据返回给客户端。
     public String ListUser(){
         return userservice.ListUser();
     }
@@ -49,19 +52,20 @@ public class UserController {
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public String login(HttpServletRequest request, @RequestBody UserInfo userInfo){
+        //用户名和密码的非空检验
         if(userInfo.getLogname()==null||userInfo.getPassword()==null){
-            return new Gson().toJson( "Fail");
+            return new Gson().toJson(null);
         }
 
         //验证用户名和密码
         boolean verify = userservice.login(userInfo.getLogname(), userInfo.getPassword());
 
         if(!verify) {
-            return new Gson().toJson("Fail");
+            return new Gson().toJson(null);
         }
+        //如果用户名和密码验证正确，存入session，并给前端返回用户名
         request.getSession().setAttribute(ConstantUtils.SESSION_KEY, userInfo.getLogname());//username & password 都一致，设定session
         return new Gson().toJson(userInfo.getLogname());
-
     }
 
     @RequestMapping(value = "/logout",method = RequestMethod.POST)
