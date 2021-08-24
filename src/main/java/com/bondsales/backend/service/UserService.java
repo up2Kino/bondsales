@@ -13,7 +13,7 @@ public class UserService {
     @Resource
     private UserMapper userMapper;
 
-    public String ListUser(){
+    public String ListUser() {
         Gson gson = new Gson();
         return gson.toJson(userMapper.selectAll());
     }
@@ -22,17 +22,17 @@ public class UserService {
         try {
             userMapper.insert(user);
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
 
 
-    public int Update(User user){
+    public int update(User user) {
         return userMapper.updateByPrimaryKey(user);
     }
 
-    public int delete(Long id){
+    public int delete(Long id) {
         return userMapper.deleteByPrimaryKey(id);
     }
 
@@ -44,10 +44,7 @@ public class UserService {
         //从数据库中取出logname和password存入result
         User result = userMapper.selectByUserName(userInfo);
         //判断logname和password是否一致
-        if (result.getLogname().equals(logname) && result.getPassword().equals(password)) {
-            return true;
-        }
-        return false;
+        return result.getLogname().equals(logname) && result.getPassword().equals(password);
     }
 }
 

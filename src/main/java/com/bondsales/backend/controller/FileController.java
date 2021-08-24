@@ -1,9 +1,10 @@
 package com.bondsales.backend.controller;
 
-import com.bondsales.backend.dao.entity.Sales;
 import com.bondsales.backend.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -20,9 +21,9 @@ public class FileController {
     @RequestMapping(value = "/fileUpload")
     @ResponseBody
     public void fileUpload(MultipartFile file) throws IOException {
-        File convFile = new File( fileName);
-        FileOutputStream fos = new FileOutputStream( convFile );
-        fos.write( file.getBytes() );
+        File convFile = new File(fileName);
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(file.getBytes());
         fos.close();
 
         // run
@@ -30,7 +31,7 @@ public class FileController {
         int end = getLineNum(fileName);
         int numOfFiles = splitField(end, splitRow);
 
-        for(int i=0; i<numOfFiles+1;i++) {
+        for (int i = 0; i < numOfFiles + 1; i++) {
             fileService.setNum(i);
             fileService.run();
         }
@@ -41,20 +42,20 @@ public class FileController {
     public int getLineNum(String fileName) throws IOException {
         FileInputStream fstream = null;
         BufferedReader br = null;
-        try{
+        try {
             fstream = new FileInputStream(fileName);
             br = new BufferedReader(new InputStreamReader(fstream));
             String strLine = "";
             int i = 0;
-            while((strLine = br.readLine() )!= null){
+            while ((strLine = br.readLine()) != null) {
                 i++;
             }
             return i;
-        } catch (Exception e){
+        } catch (Exception e) {
 //            System.out.println("将大文件拆分成小文件异常，异常：" + e);
         } finally {
             try {
-                if(br != null)
+                if (br != null)
                     br.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -86,7 +87,7 @@ public class FileController {
             System.out.println("将大文件拆分成小文件异常，异常：" + e);
         } finally {
             try {
-                if(br != null)
+                if (br != null)
                     br.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -107,9 +108,9 @@ public class FileController {
         for (Integer rowNum = 1; rowNum <= totalLine; ++rowNum) {
             strLine = br.readLine();
             int subFieldIndex;
-            if(rowNum % splitRow == 0){
+            if (rowNum % splitRow == 0) {
                 subFieldIndex = rowNum / splitRow - 1;
-            } else{
+            } else {
                 subFieldIndex = rowNum / splitRow;
             }
             subFileList.get(subFieldIndex).append(strLine + "\r\n");
@@ -134,9 +135,9 @@ public class FileController {
     // helper function3
     private static int getSubFileLines(int totalLine, int splitRow) {
         int subFileLines;
-        if(totalLine % splitRow == 0 ){
+        if (totalLine % splitRow == 0) {
             subFileLines = totalLine / splitRow;
-        }  else{
+        } else {
             subFileLines = (totalLine / splitRow) + 1;
         }
         return subFileLines;

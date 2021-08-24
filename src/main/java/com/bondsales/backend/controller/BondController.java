@@ -17,7 +17,7 @@ public class BondController {
 
     @RequestMapping("/ListBond")
     @ResponseBody
-    public String ListBond(){
+    public String ListBond() {
         return bondService.ListBond();
     }
 }

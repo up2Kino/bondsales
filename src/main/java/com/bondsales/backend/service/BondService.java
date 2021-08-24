@@ -11,7 +11,7 @@ public class BondService {
     @Resource
     private BondMapper bondMapper;
 
-    public String ListBond(){
+    public String ListBond() {
         Gson gson = new Gson();
         return gson.toJson(bondMapper.selectAll());
     }

@@ -4,6 +4,7 @@ import com.bondsales.backend.dao.entity.Sales;
 import com.bondsales.backend.dao.mapper.SalesMapper;
 import com.bondsales.backend.service.SalesService;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 import org.junit.runner.RunWith;

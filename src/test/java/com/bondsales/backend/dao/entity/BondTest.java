@@ -2,6 +2,7 @@ package com.bondsales.backend.dao.entity;
 
 import com.bondsales.backend.service.BondService;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 import org.junit.runner.RunWith;
@@ -18,11 +19,11 @@ public class BondTest {
     BondService bondService;
 
     @Test
-    public void testInsert()  {
+    public void testInsert() {
         Bond bond = new Bond();
         bond.setBondid(200L);
         bond.setBondname("证券88");
         System.out.println(bond.getBondname());
-        assertEquals("证券88",bond.getBondname());
+        assertEquals("证券88", bond.getBondname());
     }
 }

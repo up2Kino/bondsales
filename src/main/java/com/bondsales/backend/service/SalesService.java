@@ -18,34 +18,34 @@ public class SalesService {
         try {
             salesMapper.insert(sale);
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
 
-    public String listAllSale(){
+    public String listAllSale() {
         Gson gson = new Gson();
         return gson.toJson(salesMapper.selectAll());
     }
 
-    public List<SalesInfo> lookUp(SalesInfo salesInfo){
+    public List<SalesInfo> lookUp(SalesInfo salesInfo) {
         return salesMapper.lookUp(salesInfo);
     }
 
-    public Long lookUpCount(SalesInfo salesInfo){
+    public Long lookUpCount(SalesInfo salesInfo) {
         return salesMapper.lookUpCount(salesInfo);
     }
 
-    public String latestRecords(){
+    public String latestRecords() {
         Gson gson = new Gson();
         return gson.toJson(salesMapper.latestRecords());
     }
 
-    public int Update(Sales sale){
+    public int update(Sales sale) {
         return salesMapper.updateByPrimaryKey(sale);
     }
 
-    public int delete(Long id){
+    public int delete(Long id) {
         return salesMapper.deleteByPrimaryKey(id);
     }
 }

@@ -8,6 +8,7 @@ import com.bondsales.backend.dao.entity.Sales;
 import com.bondsales.backend.service.SalesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -17,7 +18,7 @@ public class SalesController {
 
     @RequestMapping("/ListAllSale")
     @ResponseBody
-    public String listSale(){
+    public String listSale() {
         return salesService.listAllSale();
     }
 
@@ -38,8 +39,8 @@ public class SalesController {
     @RequestMapping(value = "/lookUp", method = RequestMethod.POST)
     @ResponseBody
     public List<SalesInfo> lookUp(@RequestBody SalesInfo salesInfo) {
-        if(salesInfo.getPageNumber() != null){
-            Long new_pageNumber = (salesInfo.getPageNumber()-1) * salesInfo.getNumPerPage();
+        if (salesInfo.getPageNumber() != null) {
+            Long new_pageNumber = (salesInfo.getPageNumber() - 1) * salesInfo.getNumPerPage();
             salesInfo.setPageNumber(new_pageNumber);
         }
         return salesService.lookUp(salesInfo);
@@ -53,10 +54,9 @@ public class SalesController {
 
     @RequestMapping("/LatestRecords")
     @ResponseBody
-    public String latestRecords(){
+    public String latestRecords() {
         return salesService.latestRecords();
     }
-
 
 
     @RequestMapping(value = "/deleteSale", method = RequestMethod.GET)
@@ -71,7 +71,7 @@ public class SalesController {
 
     @RequestMapping(value = "/updateSale", method = RequestMethod.POST)
     public String update(Sales sale) {
-        int result = salesService.Update(sale);
+        int result = salesService.update(sale);
         if (result >= 1) {
             return "修改成功";
         } else {

@@ -1,6 +1,7 @@
 package com.bondsales.backend.service;
 
 
+import com.bondsales.backend.common.ConstantUtils;
 import com.bondsales.backend.dao.entity.Sales;
 import com.bondsales.backend.dao.mapper.SalesMapper;
 import org.springframework.stereotype.Service;
@@ -14,19 +15,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class FileService extends Thread{
+public class FileService extends Thread {
 
     @Resource
     private SalesMapper salesMapper;
 
     private int num;
 
-    static String fileName = "/Users/nicole/Desktop/file/receivedFile";
-
-    public void run(){
+    public void run() {
         int new_num = this.getNum();
-        try{
-            String sPath = fileName+"_"+ (new_num+1)+".txt";
+        try {
+            String sPath = ConstantUtils.FILE_PATH + "_" + (new_num + 1) + ".txt";
             readFile(sPath);
             deleteFile(sPath);
             this.interrupt();
@@ -71,9 +70,9 @@ public class FileService extends Thread{
             record.add(sale);
         }
 
-        try{
+        try {
             salesMapper.insertBatch(record);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("wrong");
         }
@@ -81,7 +80,7 @@ public class FileService extends Thread{
         br.close();
     }
 
-    public void setNum(int num){
+    public void setNum(int num) {
         this.num = num;
     }
 
