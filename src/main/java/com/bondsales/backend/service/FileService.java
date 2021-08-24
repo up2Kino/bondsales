@@ -31,7 +31,7 @@ public class FileService extends Thread{
             deleteFile(sPath);
             this.interrupt();
         } catch (IOException | ParseException e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
     }
 
