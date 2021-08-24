@@ -25,12 +25,12 @@ public class FileService extends Thread {
     public void run() {
         int new_num = this.getNum();
         try {
-            String sPath = ConstantUtils.FILE_PATH + "_" + (new_num + 1) + ".txt";
+            String sPath = ConstantUtils.FILE_NAME + "_" + (new_num + 1) + ".txt";
             readFile(sPath);
             deleteFile(sPath);
             this.interrupt();
         } catch (IOException | ParseException e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
     }
 
@@ -50,34 +50,47 @@ public class FileService extends Thread {
 
 
     public void readFile(String fileName) throws IOException, ParseException {
-        FileInputStream fstream = new FileInputStream(fileName);
-        BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
-        String strLine = "";
-        List<Sales> record = new ArrayList<>();
+        FileInputStream fstream = null;
+        BufferedReader br = null;
 
-        while ((strLine = br.readLine()) != null) {
-            String string = strLine;
-            String[] parts = string.split(",");
+        try{
+            fstream = new FileInputStream(fileName);
+            br = new BufferedReader(new InputStreamReader(fstream));
+            String strLine = "";
+            List<Sales> record = new ArrayList<>();
 
-            Sales sale = new Sales();
-            sale.setSellid(null);
-            sale.setUserid(Long.parseLong(parts[0]));
-            sale.setBondid(Long.parseLong(parts[2]));
-            sale.setPrice(Long.parseLong(parts[4]));
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            while ((strLine = br.readLine()) != null) {
+                String string = strLine;
+                String[] parts = string.split(",");
 
-            sale.setDate(df.parse(parts[5]));
-            record.add(sale);
+                Sales sale = new Sales();
+                sale.setSellid(null);
+                sale.setUserid(Long.parseLong(parts[0]));
+                sale.setBondid(Long.parseLong(parts[2]));
+                sale.setPrice(Long.parseLong(parts[4]));
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+                sale.setDate(df.parse(parts[5]));
+                record.add(sale);
+            }
+
+            try{
+                salesMapper.insertBatch(record);
+            } catch (Exception e){
+                System.out.println(e);
+                System.out.println("wrong");
+            }
+
+        } catch (Exception e){
+            System.out.println(e);
+        } finally {
+            try {
+                if (br != null)
+                    br.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
         }
-
-        try {
-            salesMapper.insertBatch(record);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("wrong");
-        }
-
-        br.close();
     }
 
     public void setNum(int num) {

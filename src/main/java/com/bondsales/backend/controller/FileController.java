@@ -1,5 +1,6 @@
 package com.bondsales.backend.controller;
 
+import com.bondsales.backend.common.ConstantUtils;
 import com.bondsales.backend.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,6 @@ import java.util.List;
 
 @RestController
 public class FileController {
-    static String fileName = "/Users/nicole/Desktop/file/receivedFile.txt";
 
     @Autowired
     private FileService fileService;
@@ -21,14 +21,14 @@ public class FileController {
     @RequestMapping(value = "/fileUpload")
     @ResponseBody
     public void fileUpload(MultipartFile file) throws IOException {
-        File convFile = new File(fileName);
+        File convFile = new File(ConstantUtils.FILE_NAME_TXT);
         FileOutputStream fos = new FileOutputStream(convFile);
         fos.write(file.getBytes());
         fos.close();
 
         // run
         int splitRow = 300000;
-        int end = getLineNum(fileName);
+        int end = getLineNum(ConstantUtils.FILE_NAME_TXT);
         int numOfFiles = splitField(end, splitRow);
 
         for (int i = 0; i < numOfFiles + 1; i++) {
@@ -58,13 +58,13 @@ public class FileController {
                 if (br != null)
                     br.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(e);
             }
             try {
                 if (fstream != null)
                     fstream.close();
             } catch (Exception e2) {
-                e2.printStackTrace();
+                System.out.println(e2);
             }
         }
         return -1;
@@ -76,7 +76,7 @@ public class FileController {
         FileInputStream fStream = null;
         BufferedReader br = null;
         try {
-            fStream = new FileInputStream(fileName);
+            fStream = new FileInputStream(ConstantUtils.FILE_NAME_TXT);
             br = new BufferedReader(new InputStreamReader(fStream));
             List<FileWriter> subFileList = new ArrayList<FileWriter>();
             int subFileLines = getSubFileLines(totalLine, splitRow);
@@ -90,13 +90,13 @@ public class FileController {
                 if (br != null)
                     br.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(e);
             }
             try {
                 if (fStream != null)
                     fStream.close();
             } catch (Exception e2) {
-                e2.printStackTrace();
+                System.out.println(e2);
             }
         }
         return totalLine;
@@ -126,7 +126,7 @@ public class FileController {
     private int getNumOfFiles(List<FileWriter> subFileList, int subFileLines) throws IOException {
         int numOfFiles = 0;
         for (int i = 0; i < subFileLines; i++) {
-            subFileList.add(new FileWriter(fileName.substring(0, fileName.length() - 4) + "_" + (i + 1) + ".txt"));
+            subFileList.add(new FileWriter(ConstantUtils.FILE_NAME_TXT.substring(0, ConstantUtils.FILE_NAME_TXT.length() - 4) + "_" + (i + 1) + ".txt"));
             numOfFiles = i;
         }
         return numOfFiles;
