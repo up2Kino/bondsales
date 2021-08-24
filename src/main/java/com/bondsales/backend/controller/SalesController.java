@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@ResponseBody
 public class SalesController {
     @Autowired
     private SalesService salesService;
@@ -40,6 +39,12 @@ public class SalesController {
     @ResponseBody
     public List<Sales> lookUp(@RequestBody SalesInfo salesInfo) {
         return salesService.lookUp(salesInfo);
+    }
+
+    @RequestMapping("/LatestRecords")
+    @ResponseBody
+    public String latestRecords(){
+        return salesService.latestRecords();
     }
 
 

@@ -53,4 +53,8 @@ public interface SalesMapper {
     int updateByPrimaryKey(Sales record);
 
     List<Sales> lookUp(@Param("SalesInfo") SalesInfo salesInfo);
+
+    List<SalesInfo> latestRecords();
+
+    int insertBatch(List<Sales> record);
 }
