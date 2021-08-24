@@ -33,13 +33,7 @@
             <artifactId>junit</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.15</version>
-            <scope>runtime</scope>
-        </dependency>
-
+       
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
