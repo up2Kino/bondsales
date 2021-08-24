@@ -88,7 +88,10 @@
       and s.userid = #{SalesInfo.userid,jdbcType=BIGINT}
     </if>
     </where>
-<!--    limit -->
+    <if test="SalesInfo.pageNumber == -1">
+      limit (#{SalesInfo.pageNumber} - 1) * #{SalesInfo.numPerPage} , #{SalesInfo.pageNumber} * #{SalesInfo.numPerPage}
+    </if>
+
   </select>
 
   <select id="latestRecords" resultMap="SalesInfoMap">

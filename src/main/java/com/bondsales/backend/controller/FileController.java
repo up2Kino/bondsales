@@ -39,6 +39,7 @@ public class FileController {
         while((strLine = br.readLine() )!= null){
             i++;
         }
+        br.close();
         return i;
     }
 
@@ -55,6 +56,8 @@ public class FileController {
             return numOfFiles;
         } catch (Exception e) {
             System.out.println("将大文件拆分成小文件异常，异常：" + e);
+        } finally {
+            
         }
         return totalLine;
     }
