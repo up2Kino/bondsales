@@ -19,24 +19,11 @@ public class FileController {
     @RequestMapping(value = "/fileUpload")
     @ResponseBody
     public void fileUpload(MultipartFile file) throws IOException {
-        File convFile;
-        FileOutputStream fos = null;
 
-        try{
-            convFile = new File( fileName);
-            fos = new FileOutputStream( convFile );
-            fos.write( file.getBytes() );
-            fos.close();
-        } catch (Exception e){
-            System.out.println(e);
-        } finally {
-            try {
-                if (fos != null)
-                    fos.close();
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }
+        File convFile = new File( fileName);
+        FileOutputStream fos = new FileOutputStream( convFile );
+        fos.write( file.getBytes() );
+        fos.close();
 
         // run
         int splitRow = 300000;
