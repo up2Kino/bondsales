@@ -1,3 +1,6 @@
+/**
+ * 注入拦截器
+ */
 package com.bondsales.backend.Interceptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +23,4 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/","/login","/logout");
     }
-
 }

@@ -1,3 +1,6 @@
+/**
+ * 债券实体类
+ */
 package com.bondsales.backend.dao.entity;
 
 import java.io.Serializable;
