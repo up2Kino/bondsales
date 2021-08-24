@@ -1,4 +1,4 @@
-package com.bondsales.backend;
+package com.bondsales.backend.dao.mapper;
 
 import com.bondsales.backend.dao.entity.Sales;
 import com.bondsales.backend.dao.mapper.SalesMapper;
@@ -13,7 +13,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-
 public class SalesMapperTest {
 
     @Autowired
