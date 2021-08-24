@@ -46,9 +46,11 @@ public class FileController {
 
     // split the big file into several files
     public int splitField(int totalLine, int splitRow) {
+        FileInputStream fStream = null;
+        BufferedReader br = null;
         try {
-            FileInputStream fStream = new FileInputStream(fileName);
-            BufferedReader br = new BufferedReader(new InputStreamReader(fStream));
+            fStream = new FileInputStream(fileName);
+            br = new BufferedReader(new InputStreamReader(fStream));
             List<FileWriter> subFileList = new ArrayList<FileWriter>();
             int subFileLines = getSubFileLines(totalLine, splitRow);
             int numOfFiles = getNumOfFiles(subFileList, subFileLines);
@@ -57,7 +59,18 @@ public class FileController {
         } catch (Exception e) {
             System.out.println("将大文件拆分成小文件异常，异常：" + e);
         } finally {
-            
+            try {
+                if(br != null)
+                    br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (fStream != null)
+                    fStream.close();
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
         }
         return totalLine;
     }
