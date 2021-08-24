@@ -28,8 +28,12 @@ public class SalesService {
         return gson.toJson(salesMapper.selectAll());
     }
 
-    public List<Sales> lookUp(SalesInfo salesInfo){
+    public List<SalesInfo> lookUp(SalesInfo salesInfo){
         return salesMapper.lookUp(salesInfo);
+    }
+
+    public Long lookUpCount(SalesInfo salesInfo){
+        return salesMapper.lookUpCount(salesInfo);
     }
 
     public String latestRecords(){

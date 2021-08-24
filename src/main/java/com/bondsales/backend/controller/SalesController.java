@@ -37,8 +37,18 @@ public class SalesController {
 
     @RequestMapping(value = "/lookUp", method = RequestMethod.POST)
     @ResponseBody
-    public List<Sales> lookUp(@RequestBody SalesInfo salesInfo) {
+    public List<SalesInfo> lookUp(@RequestBody SalesInfo salesInfo) {
+        if(salesInfo.getPageNumber() != null){
+            Long new_pageNumber = (salesInfo.getPageNumber()-1) * salesInfo.getNumPerPage();
+            salesInfo.setPageNumber(new_pageNumber);
+        }
         return salesService.lookUp(salesInfo);
+    }
+
+    @RequestMapping(value = "/lookUpCount", method = RequestMethod.POST)
+    @ResponseBody
+    public Long lookUpCount(@RequestBody SalesInfo salesInfo) {
+        return salesService.lookUpCount(salesInfo);
     }
 
     @RequestMapping("/LatestRecords")

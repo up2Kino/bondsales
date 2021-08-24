@@ -88,10 +88,23 @@
       and s.userid = #{SalesInfo.userid,jdbcType=BIGINT}
     </if>
     </where>
-    <if test="SalesInfo.pageNumber == -1">
-      limit (#{SalesInfo.pageNumber} - 1) * #{SalesInfo.numPerPage} , #{SalesInfo.pageNumber} * #{SalesInfo.numPerPage}
+    <if test="SalesInfo.pageNumber != null">
+      limit #{SalesInfo.pageNumber,jdbcType=BIGINT} , #{SalesInfo.numPerPage,jdbcType=BIGINT}
     </if>
+  </select>
 
+  <select id="lookUpCount" parameterType="com.bondsales.backend.common.SalesInfo" resultType="java.lang.Long">
+    select count(*)
+    from SALES s left join BOND d on s.bondid = d.bondid left join USER u on s.userid = u.userid
+    <where>
+      date between #{SalesInfo.startDate,jdbcType=DATE} and #{SalesInfo.endDate,jdbcType=DATE}
+      <if test="SalesInfo.bondid != null">
+        and s.bondid = #{SalesInfo.bondid,jdbcType=BIGINT}
+      </if>
+      <if test="SalesInfo.userid != null">
+        and s.userid = #{SalesInfo.userid,jdbcType=BIGINT}
+      </if>
+    </where>
   </select>
 
   <select id="latestRecords" resultMap="SalesInfoMap">
