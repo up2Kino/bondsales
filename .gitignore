@@ -29,8 +29,5 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-###配置文件 ###
-.properties
-
 ### VS Code ###
 .vscode/
