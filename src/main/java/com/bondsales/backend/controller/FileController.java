@@ -1,7 +1,6 @@
 package com.bondsales.backend.controller;
 
-import com.bondsales.backend.service.MyThread;
-import com.bondsales.backend.service.SalesService;
+import com.bondsales.backend.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,20 +13,22 @@ public class FileController {
     static String fileName = "/Users/nicole/Desktop/file/receivedFile.txt";
 
     @Autowired
-    private SalesService salesService;
+    private FileService fileService;
 
-    @RequestMapping(value = "/fileDownload")
+    @RequestMapping(value = "/fileUpload")
     @ResponseBody
-    public void fileInsert() throws IOException {
-        int splitRow = 300000;
+    public void fileUpload() throws IOException {
+//        int splitRow = 300000;
+        int splitRow = 50;
         int end = getLineNum(fileName);
         int numOfFiles = splitField(end, splitRow);
 
-//        new MyThread().run();
-
         for(int i=0; i<numOfFiles+1;i++) {
-            new MyThread(i).run();
+            fileService.setNum(i);
+            fileService.run();
         }
+        System.out.println("finish!");
+        return;
     }
 
     // get the number of lines

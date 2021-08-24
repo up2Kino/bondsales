@@ -3,46 +3,31 @@ package com.bondsales.backend.service;
 
 import com.bondsales.backend.dao.entity.Sales;
 import com.bondsales.backend.dao.mapper.SalesMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 @Service
-//@ComponentScan({"java.lang.Integer"})
-public class MyThread extends Thread{
-    @Autowired
+public class FileService extends Thread{
+
+    @Resource
     private SalesMapper salesMapper;
 
-    private Integer num;
+    private int num;
 
     static String fileName = "/Users/nicole/Desktop/file/receivedFile";
 
-    @Autowired
-    public MyThread(Integer num){
-
-        this.num = num;
-    }
-
     public void run(){
-
-        /*
-        FileHandler fileHandler = new FileHandler();
-        object converted into method
-         */
+        int new_num = this.getNum();
         try{
-//            String sPath = fileName+"_"+ (num+1)+".txt";
-            String sPath = fileName+"_"+ (1)+".txt";
-//            System.out.println("**********Start of file" + fileName+"_"+ (num+1)+".txt***************");
+            String sPath = fileName+"_"+ (new_num+1)+".txt";
             readFile(sPath);
-//            System.out.println("**********End of file" + fileName+"_"+ (num+1)+".txt***************");
             deleteFile(sPath);
-
+            this.interrupt();
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
@@ -55,7 +40,7 @@ public class MyThread extends Thread{
 
         // 路径为文件且不为空则进行删除
         if (file.isFile() && file.exists()) {
-            file.deleteOnExit();
+            file.delete();
             flag = true;
         }
         System.out.println(flag);
@@ -70,10 +55,6 @@ public class MyThread extends Thread{
         while ((strLine = br.readLine()) != null) {
             String string = strLine;
             String[] parts = string.split(",");
-//            String userid = parts[0];
-//            String bondid = parts[1];
-//            String price = parts[2];
-//            String date = parts[3];
 
             Sales sale = new Sales();
             sale.setUserid(Long.parseLong(parts[0]));
@@ -82,22 +63,22 @@ public class MyThread extends Thread{
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
             sale.setDate(df.parse(parts[3]));
-            System.out.println(sale);
             try{
                 salesMapper.insert(sale);
             } catch (Exception e){
-//                e.printStackTrace();
+                e.printStackTrace();
                 System.out.println("wrong");
             }
-//            salesMapper.insert(sale);
-
-//            System.out.println(userid +" " + bondid + " " + price + " " + date +" ");
 
         }
         br.close();
     }
 
+    public void setNum(int num){
+        this.num = num;
+    }
 
-
-
+    public int getNum() {
+        return num;
+    }
 }
