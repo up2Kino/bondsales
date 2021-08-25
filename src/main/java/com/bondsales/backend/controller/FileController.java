@@ -46,11 +46,8 @@ public class FileController {
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
-                try {
                     inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                    writer.close();
             }
         } catch (Exception e) {
             e.printStackTrace();
