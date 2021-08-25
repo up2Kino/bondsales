@@ -25,7 +25,7 @@ public class FileService extends Thread {
     public void run() {
         int new_num = this.getNum();
         try {
-            String sPath = ConstantUtils.FILE_NAME + "_" + (new_num + 1) + ".txt";
+            String sPath = ConstantUtils.FILE_NAME + new_num + ".txt";
             readFile(sPath);
             deleteFile(sPath);
             this.interrupt();
